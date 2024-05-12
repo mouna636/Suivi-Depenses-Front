@@ -4,9 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './Components/home/home.component';
-import { GestionDepensesModule } from './Components/gestion-depenses/gestion-depenses.module';
+
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { AdminSidebarComponent } from './Components/admin-sidebar/admin-sidebar.component';
+import { AddDepenseComponent } from './Components/gestion-depenses/add-depense/add-depense.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -15,11 +19,11 @@ import { AdminSidebarComponent } from './Components/admin-sidebar/admin-sidebar.
     AppComponent,
     HomeComponent,
     DashboardComponent,
-    AdminSidebarComponent
+    AdminSidebarComponent,AddDepenseComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,GestionDepensesModule
+    AppRoutingModule,FormsModule,ReactiveFormsModule,HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
