@@ -15,6 +15,11 @@ import { TagListComponent } from './Components/tag-list/tag-list.component';
 import { AuthComponent } from './Components/auth/auth.component';
 import { ListDepenseComponent } from './Components/gestion-depenses/list-depense/list-depense.component';
 
+import { FooterComponent } from './Components/footer/footer.component';
+import { HeroComponent } from './Components/hero/hero.component';
+import { NavbarComponent } from './Components/navbar/navbar.component';
+import { TopBarComponent } from './Components/top-bar/top-bar.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +30,11 @@ import { ListDepenseComponent } from './Components/gestion-depenses/list-depense
     CategoryListComponent,
     TagListComponent,
     AuthComponent, ListDepenseComponent
+    ,
+    NavbarComponent,
+    HeroComponent,
+    FooterComponent,
+    TopBarComponent,
   ],
   imports: [
     BrowserModule,
