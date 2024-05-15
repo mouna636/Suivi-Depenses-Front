@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DepenseService } from '../depense.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { CategoryService } from 'src/app/services/category.service';
+import { Subscription } from 'rxjs';
 import { Papa } from 'ngx-papaparse';
 
 @Component({
@@ -9,30 +12,91 @@ import { Papa } from 'ngx-papaparse';
   styleUrls: ['./list-depense.component.scss'],
 })
 export class ListDepenseComponent implements OnInit {
-  depenses: any[] = [];
+depenses:any[]=[]
+  startDate: string = '';
+  endDate: string = '';
+
+  selectedCategory: string = '';
+
+  categories: any[] = [];
+  categoriesFilter: any[] = [];
+
   constructor(
     private depenseService: DepenseService,
+    private cat: CategoryService,
     private router: Router,
     private papa: Papa
   ) {}
+
   ngOnInit() {
     this.getAllDepenses();
+
+    this.cat.getAllCategoriesByUserId().subscribe(
+      (data) => {
+        this.categories = data;
+        console.log('Categories:', this.categories);
+      },
+      
+    );
   }
+
   getAllDepenses() {
     this.depenseService.getAllDepensessByUserId().subscribe((data) => {
       this.depenses = data;
+      this.categoriesFilter = data;
     });
   }
-  /*  deleteDepense(id:number){
-    this.depenseService.deleteOffre(id).subscribe((res)=>
-      {
-        console.log(res);
+  
+  onDateRangeChange() {
+   
+    if (this.startDate && this.endDate) {
+      
+      this.loadDepensesByDateRange();
+    } else {
+      
+      this.getAllDepenses();
+    }
+  }
+
+
+  // Charge les dépenses en fonction de la plage de dates spécifiée
+  loadDepensesByDateRange(): void {
+    this.depenseService
+      .filterDepensesByDateRange(this.startDate, this.endDate)
+      .subscribe(
+        (data) => {
+          this.depenses = data;
+        },
+       
+      );
+  }
+
+  // Trie les dépenses par montant
+
+  sortDepensesByAmount(sortBy: 'asc' | 'desc'): void {
+    this.depenses.sort((a, b) => {
+      if (sortBy === 'asc') {
+        return a.montant - b.montant;
+      } else {
+        return b.montant - a.montant;
       }
-    )
-   }
-   gotToEditOffre(x: any) {
-    this.router.navigate([`update-offre/${x}`]);
-  } */
+    });
+  }
+
+  // Filtre par catégorie
+  filterDepensesByCategory(categoryId: any): void {
+    if (categoryId.target.value === '') {
+      this.depenses = this.categoriesFilter;
+
+      
+    } else {
+      this.depenses = this.categoriesFilter.filter(
+        (depense) => depense.categoryId._id === categoryId.target.value
+      );
+    }
+  }
+
+
   csvData: [] = [];
   csvError = '';
   onAddCSVData() {

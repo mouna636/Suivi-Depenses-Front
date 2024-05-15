@@ -6,7 +6,12 @@
   montant: string;
   date: string;
   description: string;
-  categoryId: string;
+  
   tagId: string;
   userId: string;
+  categoryId: {
+    name: string;
+    // Autres propriétés éventuelles de categoryId
+  };
+  // Au
 }

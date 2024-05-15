@@ -45,6 +45,7 @@ import { GraphiqueComponent } from './Components/graphique/graphique.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+   
   ],
   providers: [],
   bootstrap: [AppComponent],

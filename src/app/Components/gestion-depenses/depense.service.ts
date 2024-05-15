@@ -22,4 +22,15 @@ export class DepenseService {
       `${this.URI}/user/${this.local.getObject('user').id}`
     );
   }
+
+  //filtrer les dépenses par date
+  filterDepensesByDateRange(startDate: string, endDate: string): Observable <any> {
+    return this.http.get(`${this.URI}/user/${this.local.getObject('user').id}/date/${startDate}/${endDate}`);
+  }
+
+  //trier les transactions par montant
+  sortDepensesByAmount(sortBy:any): Observable <any> {
+    return this.http.get(`${this.URI}/user/${this.local.getObject('user').id}/montant/${sortBy}`);
+  }
+
 }
