@@ -13,6 +13,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { CategoryListComponent } from './Components/category-list/category-list.component';
 import { TagListComponent } from './Components/tag-list/tag-list.component';
 import { AuthComponent } from './Components/auth/auth.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { HeroComponent } from './components/hero/hero.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,9 @@ import { AuthComponent } from './Components/auth/auth.component';
     CategoryListComponent,
     TagListComponent,
     AuthComponent,
+    NavbarComponent,
+    HeroComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

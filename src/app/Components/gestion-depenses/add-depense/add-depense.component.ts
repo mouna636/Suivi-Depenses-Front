@@ -7,7 +7,7 @@ import { CategoryService } from 'src/app/services/category.service';
 @Component({
   selector: 'app-add-depense',
   templateUrl: './add-depense.component.html',
-  styleUrls: ['./add-depense.component.scss']
+  styleUrls: ['./add-depense.component.scss'],
 })
 export class AddDepenseComponent implements OnInit {
   depenseForm: any;
@@ -19,7 +19,7 @@ export class AddDepenseComponent implements OnInit {
     private depenseService: DepenseService,
     private categoryService: CategoryService,
     private tagService: TagService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -33,16 +33,15 @@ export class AddDepenseComponent implements OnInit {
       description: ['', Validators.required],
       categoryId: ['', Validators.required],
       tagId: ['', Validators.required],
-      userId: ['', Validators.required] // Assuming this is fetched from local storage in the service
     });
   }
 
   loadCategoriesAndTags(): void {
-    this.categoryService.getAllCategoriesByUserId().subscribe(data => {
+    this.categoryService.getAllCategoriesByUserId().subscribe((data) => {
       this.categories = data;
     });
 
-    this.tagService.getAllTagsByUserId().subscribe(data => {
+    this.tagService.getAllTagsByUserId().subscribe((data) => {
       this.tags = data;
     });
   }
@@ -53,17 +52,13 @@ export class AddDepenseComponent implements OnInit {
       const depense = this.depenseForm.value;
       console.log('depense', depense);
     }
-      
+
     if (this.depenseForm.valid) {
       const depense = this.depenseForm.value;
       console.log('depense', depense);
-      this.depenseService.addDepense(depense).subscribe(
-        (response) => {
-          console.log('Dépense ajoutée avec succès :', response);
-        },
-        
-      );
+      this.depenseService.addDepense(depense).subscribe((response) => {
+        console.log('Dépense ajoutée avec succès :', response);
+      });
     }
   }
-
 }
