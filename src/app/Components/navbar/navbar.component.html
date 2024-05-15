@@ -1,8 +1,40 @@
-<nav id="navbar" class="navbar">
+<nav id="navbar">
   <ul>
-    
-    
-    <li><a class="nav-link " routerLink="/auth">Log In</a></li>
+    <li *ngIf="!isAuthenticated">
+      <a class="nav-link text-white" routerLink="/auth"
+        ><strong>Log In</strong></a
+      >
+    </li>
+    <li *ngIf="isAuthenticated">
+      <div class="btn-group rounded-full">
+        <button
+          type="button"
+          class="btn dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <span class="nav-user-img">
+            <picture
+              ><source
+                srcset="assets/img2/avatar/avatar-illustrated-02.webp"
+                type="image/webp" />
+              <img
+                width="30"
+                height="30"
+                src="assets/img2/avatar/avatar-illustrated-02.png"
+                alt="User name"
+            /></picture>
+          </span>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <a class="dropdown-item" style="cursor: pointer" (click)="logout()"
+              >Log out</a
+            >
+          </li>
+        </ul>
+      </div>
+    </li>
   </ul>
   <i class="bi bi-list mobile-nav-toggle"></i>
 </nav>
