@@ -46,14 +46,25 @@
                       <tbody>
                         <tr *ngFor="let tag of categoryList; let i = index">
                           <td>{{ i + 1 }}</td>
-                          <td>{{ tag.name }}</td>
+                          <td>
+                            {{ tag.name }}
+                          </td>
                           <td>{{ tag.description }}</td>
+
                           <td
-                            [ngClass]="{
-                              danger: checkIfIdInArrayOfObjects(tag)
-                            }"
+                            [ngStyle]="
+                              checkIfIdInArrayOfObjects(tag)
+                                ? { 'font-weight': 'bolder', color: 'red' }
+                                : null
+                            "
                           >
-                            {{ tag.budget }} DT
+                            <p
+                              [ngClass]="{
+                                pulse: checkIfIdInArrayOfObjects(tag)
+                              }"
+                            >
+                              {{ tag.budget }} DT
+                            </p>
                           </td>
 
                           <td class="d-flex">

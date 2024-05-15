@@ -99,6 +99,8 @@ export class CategoryListComponent implements OnInit {
   }
 
   checkIfIdInArrayOfObjects(cat: any): boolean {
+    console.log(cat);
+
     return this.exeededCats.some((item) => item.category._id === cat._id);
   }
 
