@@ -1,59 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elegant Dashboard | Dashboard</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
-</head>
+  <body>
+    <div class="layer"></div>
+    <!-- ! Body -->
+    <a class="skip-link sr-only" href="#skip-target">Skip to content</a>
+    <div class="page-flex">
+      <app-admin-sidebar></app-admin-sidebar>
 
-<body>
-  <div class="layer"></div>
-<!-- ! Body -->
-<a class="skip-link sr-only" href="#skip-target">Skip to content</a>
-<div class="page-flex">
-<app-admin-sidebar></app-admin-sidebar>
+      <div class="main-wrapper">
+        <app-top-bar></app-top-bar>
 
-<div class="main-wrapper" >
-          <app-top-bar></app-top-bar>
-          <div class="col-md-10">
-            <div class="container" style="margin-top: 20px; margin-left: 120px;">
-                <div class="section-title">
-                  
-                  </div>
-                  <br>
-                  <img src="assets\img\icons8-importer-csv-100.png" style="margin-bottom: 10px;">
-                 <input type="submit" class="button" value="Ajouter dépense" [routerLink]="'/add-depense'">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Catégorie</th>
-                        <th>Montant</th>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Tag</th>
-                        <th>Actions</th>
-                        </tr> 
-                        
-                    </thead>
-                    <tbody> 
-                        <tr *ngFor="let d of depenses">
-                            <td>{{d.categoryId.name}}</td>  
-                            <td>{{d.montant}}</td> 
-                            <td>{{d.date}}</td> 
-                            <td>{{d.description}}</td> 
-                           
-                            <td>{{d.tagId.name}}</td>
-                            <td>
-                              <i  class="bi bi-trash-fill actionBtn text-danger" style="margin-left: 20px; margin-right:20px ;"></i>
-                           <i data-bs-toggle="modal" data-bs-target="#tag1" class="bi bi-pencil-fill actionBtn"></i>
-                            </td> 
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- Sort buttons -->
+        <div class="container mt-3">
+          <div style="display: flex; align-items: center">
+            <label style="margin-right: 10px">Trier par montant:</label>
 
-</div>
+            <!-- Tri ascendant -->
+            <span
+              (click)="sortDepensesByAmount('asc')"
+              style="cursor: pointer"
+              aria-label="Trier par montant (ascendant)"
+            >
+              <i class="fas fa-sort-amount-up"></i>
+            </span>
+
+            <!-- Marge entre les icônes -->
+            <div style="width: 10px"></div>
+
+            <!-- Tri descendant -->
+            <span
+              (click)="sortDepensesByAmount('desc')"
+              style="cursor: pointer"
+              aria-label="Trier par montant (descendant)"
+            >
+              <i class="fas fa-sort-amount-down"></i>
+            </span>
           </div>
+        </div>
+
+        <!-- Select categories -->
+        <div class="container mt-3">
+          <label for="category">Trier par Categorie:</label>
+          <select
+            class="form-select w-50"
+            id="category"
+            [(ngModel)]="selectedCategory"
+            (change)="filterDepensesByCategory($event)"
+          >
+            <option value="">Tout les Categories</option>
+            <option *ngFor="let category of categories" [value]="category._id">
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Formulaire de filtrage des dépenses -->
+        <div class="container mt-3" style="margin-top: 20px">
+          <div class="row">
+            <div class="col-md-5 pe-2">
+              <div>
+                <label for="startDate"> Date Début:</label>
+                <input
+                  type="date"
+                  id="startDate"
+                  [(ngModel)]="startDate"
+                  (change)="onDateRangeChange()"
+                />
+              </div>
+            </div>
+            <div class="col-md-5 ps-2">
+              <div>
+                <label for="endDate">Date fin:</label>
+                <input
+                  type="date"
+                  id="endDate"
+                  [(ngModel)]="endDate"
+                  (change)="onDateRangeChange()"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dépenses filtrées -->
+
+        <!-- <div
+          *ngIf="depenses.length > 0"
+          class="container"
+          style="margin-top: 20px"
+        >
+          <h4>Dépenses:</h4>
+          <table class="table mt-2">
+            <thead>
+              <tr>
+                <th>Catégorie</th>
+                <th>Montant</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Tag</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let d of depenses">
+                <td>{{ d.categoryId.name }}</td>
+                <td>{{ d.montant }}</td>
+                <td>{{ d.date }}</td>
+                <td>{{ d.description }}</td>
+                <td>{{ d.tagId.name }}</td>
+                <td>
+                  <i
+                    class="bi bi-trash-fill actionBtn text-danger"
+                    style="margin-left: 20px; margin-right: 20px"
+                  ></i>
+                  <i
+                    data-bs-toggle="modal"
+                    data-bs-target="#tag1"
+                    class="bi bi-pencil-fill actionBtn"
+                  ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div> -->
+
+        <div class="col-md-10">
+          <div class="container" style="margin-top: 20px; margin-left: 120px">
+            <div class="section-title"></div>
+            <br />
+            <div
+              class="container d-flex justify-content-end align-items-center"
+            >
+              <img
+                data-bs-toggle="modal"
+                width="50"
+                height="50"
+                title="Importer via un fichier CSV"
+                data-bs-target="#exampleModal2"
+                src="assets\img\icons8-importer-csv-100.png"
+                style="margin-bottom: 10px; cursor: pointer"
+              />
+              <input
+                type="submit"
+                class="button"
+                value="Ajouter dépense"
+                [routerLink]="'/add-depense'"
+              />
+            </div>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Catégorie</th>
+                  <th>Montant</th>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Tag</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let d of depenses">
+                  <td>{{ d.categoryId.name }}</td>
+                  <td>{{ d.montant }}</td>
+                  <td>{{ d.date }}</td>
+                  <td>{{ d.description }}</td>
+
+                  <td [ngStyle]="{ 'background-color': d.tagId.color }">
+                    {{ d.tagId.name }}
+                  </td>
+                  <td>
+                    <i
+                      class="bi bi-trash-fill actionBtn text-danger"
+                      style="margin-left: 20px; margin-right: 20px"
+                    ></i>
+                    <i
+                      data-bs-toggle="modal"
+                      data-bs-target="#tag1"
+                      class="bi bi-pencil-fill actionBtn"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<div
+  class="modal fade"
+  id="exampleModal2"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Load csv</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <input type="file" accept=".csv" (change)="readCsvData($event)" />
+        <div *ngIf="csvError">
+          <p class="text-danger">{{ csvError }}</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-success" (click)="onAddCSVData()">
+          Load csv
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
-</div></body></html>

@@ -5,10 +5,9 @@ import { Depense } from 'src/app/models/Depense';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { BASE_URL } from 'src/app/services/config';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DepenseService {
-
   URI = `${BASE_URL}/api/depenses`;
 
   constructor(private http: HttpClient, private local: LocalStorageService) {}
@@ -23,4 +22,15 @@ export class DepenseService {
       `${this.URI}/user/${this.local.getObject('user').id}`
     );
   }
+
+  //filtrer les dépenses par date
+  filterDepensesByDateRange(startDate: string, endDate: string): Observable <any> {
+    return this.http.get(`${this.URI}/user/${this.local.getObject('user').id}/date/${startDate}/${endDate}`);
+  }
+
+  //trier les transactions par montant
+  sortDepensesByAmount(sortBy:any): Observable <any> {
+    return this.http.get(`${this.URI}/user/${this.local.getObject('user').id}/montant/${sortBy}`);
+  }
+
 }
