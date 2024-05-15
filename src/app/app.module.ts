@@ -17,6 +17,7 @@ import { AuthComponent } from './Components/auth/auth.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import { HeroComponent } from './Components/hero/hero.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
+import { TopBarComponent } from './Components/top-bar/top-bar.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
     NavbarComponent,
     HeroComponent,
     FooterComponent,
+    TopBarComponent,
   ],
   imports: [
     BrowserModule,
