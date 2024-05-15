@@ -18,4 +18,9 @@ export class DepenseService {
 
     return this.http.post<Depense>(this.URI, { depense });
   }
+  getAllDepensessByUserId() {
+    return this.http.get<Depense[]>(
+      `${this.URI}/user/${this.local.getObject('user').id}`
+    );
+  }
 }

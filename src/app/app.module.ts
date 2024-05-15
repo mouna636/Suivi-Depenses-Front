@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CategoryListComponent } from './Components/category-list/category-list.component';
 import { TagListComponent } from './Components/tag-list/tag-list.component';
 import { AuthComponent } from './Components/auth/auth.component';
+import { ListDepenseComponent } from './Components/gestion-depenses/list-depense/list-depense.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { AuthComponent } from './Components/auth/auth.component';
     AddDepenseComponent,
     CategoryListComponent,
     TagListComponent,
-    AuthComponent,
+    AuthComponent, ListDepenseComponent
   ],
   imports: [
     BrowserModule,
