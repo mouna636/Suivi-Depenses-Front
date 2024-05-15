@@ -48,9 +48,15 @@ export class AddDepenseComponent implements OnInit {
   }
 
   addDepense(): void {
+    console.log('this.depenseForm', this.depenseForm);
+    if (!this.depenseForm.valid) {
+      const depense = this.depenseForm.value;
+      console.log('depense', depense);
+    }
+      
     if (this.depenseForm.valid) {
       const depense = this.depenseForm.value;
-
+      console.log('depense', depense);
       this.depenseService.addDepense(depense).subscribe(
         (response) => {
           console.log('Dépense ajoutée avec succès :', response);
