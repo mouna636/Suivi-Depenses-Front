@@ -57,7 +57,9 @@
                   <td>{{ d.date }}</td>
                   <td>{{ d.description }}</td>
 
-                  <td>{{ d.tagId.name }}</td>
+                  <td [ngStyle]="{ 'background-color': d.tagId.color }">
+                    {{ d.tagId.name }}
+                  </td>
                   <td>
                     <i
                       class="bi bi-trash-fill actionBtn text-danger"
