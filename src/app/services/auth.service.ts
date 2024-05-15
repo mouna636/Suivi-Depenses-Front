@@ -49,7 +49,7 @@ export class AuthService {
   register(user: any): Observable<any> {
     console.log(user);
 
-    return this.http.post(BASE_URL + '/signup', {
+    return this.http.post(BASE_URL + '/api/auth/signup', {
       name: user.name,
       email: user.email,
       password: user.password,
