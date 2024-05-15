@@ -1,0 +1,47 @@
+/* list-depense.component.scss */
+
+/* Style pour la table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  /* Style pour les cellules de la table */
+  td, th {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Style pour l'en-tête de la table */
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  /* Style pour chaque ligne de données */
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  .button {
+    padding: 10px 20px;
+    background-color: #266c18;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-left: 850px;
+  }
+  tr:hover {
+    background-color: #ddd;
+  }
+  
+  /* Style pour les icônes d'action */
+  .actionBtn {
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
