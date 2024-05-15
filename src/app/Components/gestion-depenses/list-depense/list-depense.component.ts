@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CategoryService } from 'src/app/services/category.service';
 import { Subscription } from 'rxjs';
+import { Papa } from 'ngx-papaparse';
 
 @Component({
   selector: 'app-list-depense',
@@ -24,7 +25,8 @@ export class ListDepenseComponent implements OnInit {
   constructor(
     private depenseService: DepenseService,
     private cat: CategoryService,
-    private router: Router
+    private router: Router,
+    private papa: Papa
   ) {}
 
   ngOnInit() {
@@ -48,28 +50,25 @@ export class ListDepenseComponent implements OnInit {
     });
   }
 
-  /*  deleteDepense(id:number){
-    this.depenseService.deleteOffre(id).subscribe((res)=>
-      {
-        console.log(res);
-      }
-    )
-   }
-   gotToEditOffre(x: any) {
-    this.router.navigate([`update-offre/${x}`]);
-  } */
 
-  // Méthode appelée lors du changement de la plage de dates
+  
+  
+  
+ 
+
+  
   onDateRangeChange() {
-    // Assurez-vous que les dates de début et de fin sont définies
+   
     if (this.startDate && this.endDate) {
-      // Charge les dépenses filtrées par la plage de dates spécifiée
+      
       this.loadDepensesByDateRange();
     } else {
-      // Si les dates ne sont pas définies, charge toutes les dépenses
+      
       this.getAllDepenses();
     }
   }
+
+
 
   // Charge les dépenses en fonction de la plage de dates spécifiée
   loadDepensesByDateRange(): void {
@@ -85,22 +84,7 @@ export class ListDepenseComponent implements OnInit {
       );
   }
 
-  // Charge les dépenses triées par montant
-  // sortDepensesByAmount(sortBy: any): void {
-
-  //   this.depenseService.sortDepensesByAmount(sortBy).subscribe(
-  //     (data) => {
-  //       this.depenses = data;
-  //       console.log('Depenses triées par montant:', this.depenses);
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching depenses by amount:', error);
-  //       if (error instanceof HttpErrorResponse) {
-  //         console.error(`HTTP Error Status: ${error.status}, ${error.statusText}`);
-  //       }
-  //     }
-  //   );
-  // }
+  // Trie les dépenses par montant
 
   sortDepensesByAmount(sortBy: 'asc' | 'desc'): void {
     this.depenses.sort((a, b) => {
@@ -122,6 +106,41 @@ export class ListDepenseComponent implements OnInit {
       this.depenses = this.categoriesFilter.filter(
         (depense) => depense.categoryId._id === categoryId.target.value
       );
+    }
+  }
+
+
+  csvData: [] = [];
+  csvError = '';
+  onAddCSVData() {
+    if (this.csvData.length == 0) return;
+    this.csvData.forEach((depense: any) => {
+      if (depense.date && depense.montant && depense.description) {
+        this.depenseService.addDepense(depense).subscribe({
+          next: (data: any) => {
+            this.getAllDepenses();
+          },
+          error: (error) => {
+            console.error('There was an error!', error);
+            this.csvError = error;
+          },
+        });
+      }
+    });
+    console.log(this.csvData);
+  }
+
+  readCsvData(event: any): any {
+    const file = event.target.files[0];
+
+    if (file) {
+      this.papa.parse(file, {
+        header: true,
+        complete: (results: any) => {
+          this.csvData = results.data;
+        },
+        error: (err: any) => console.log(err),
+      });
     }
   }
 }
