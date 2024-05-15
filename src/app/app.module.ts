@@ -10,22 +10,29 @@ import { AdminSidebarComponent } from './Components/admin-sidebar/admin-sidebar.
 import { AddDepenseComponent } from './Components/gestion-depenses/add-depense/add-depense.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
-
-
+import { CategoryListComponent } from './Components/category-list/category-list.component';
+import { TagListComponent } from './Components/tag-list/tag-list.component';
+import { AuthComponent } from './Components/auth/auth.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     DashboardComponent,
-    AdminSidebarComponent,AddDepenseComponent
+    AdminSidebarComponent,
+    AddDepenseComponent,
+    CategoryListComponent,
+    TagListComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,FormsModule,ReactiveFormsModule,HttpClientModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

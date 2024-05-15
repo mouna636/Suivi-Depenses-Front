@@ -1,0 +1,116 @@
+.roundedBtn {
+  border-radius: 50px;
+  padding: 5px 20px;
+  margin: 5px;
+  background-color: #f5f5f5;
+  color: #000;
+  border: 1px solid #b5b5b5;
+  cursor: pointer;
+  transition: 0.3s;
+  height: 40px;
+  width: 40px;
+  &:hover {
+    background-color: #000000b4;
+    color: #fff;
+  }
+  &.active {
+    background-color: #0000004e;
+    color: #fff;
+  }
+}
+
+.smallerRoundedButton {
+  border-radius: 50px;
+  padding: 10px;
+  margin: 5px;
+  background-color: #f5f5f5;
+  color: #000;
+
+  cursor: pointer;
+  transition: 0.3s;
+  height: 10px;
+  width: 10px;
+  &:hover {
+    background-color: #000000b4;
+    color: #fff;
+  }
+  &.active {
+    background-color: #0000004e;
+    color: #fff;
+  }
+}
+
+.active {
+  background-color: yellow;
+  color: #fff;
+}
+
+.actionBtn {
+  margin: 0 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    background-color: #d3d3d3;
+  }
+}
+
+.tags {
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.tags li {
+  float: left;
+}
+
+.tag {
+  background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #eeeeee;
+  display: inline-block;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 20px 0 23px;
+  position: relative;
+  transition: color 1s;
+  margin: 0 10px 10px 0;
+  text-decoration: none;
+  -webkit-transition: color 0.2s;
+}
+
+.tag::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: "";
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+  top: 10px;
+}
+
+.tag::after {
+  background: #fff;
+  border-bottom: 13px solid transparent;
+  border-left: 10px solid rgb(45, 45, 45);
+  border-top: 13px solid transparent;
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tag:hover {
+  background-color: rgba(220, 20, 60, 0.241);
+}
+
+.tag:hover::after {
+  border-left-color: rgba(220, 20, 60, 0.224);
+}
