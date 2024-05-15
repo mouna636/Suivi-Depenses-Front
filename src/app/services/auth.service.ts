@@ -50,7 +50,7 @@ export class AuthService {
     console.log(user);
 
     return this.http.post(BASE_URL + '/api/auth/signup', {
-      name: user.name,
+      username: user.username,
       email: user.email,
       password: user.password,
     });

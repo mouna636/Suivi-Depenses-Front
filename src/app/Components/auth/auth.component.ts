@@ -83,8 +83,10 @@ export class AuthComponent {
           this.toggleSide();
         },
         error: (err) => {
+          console.log(user);
+
           let error: string = err.error.message;
-          console.log(error);
+          console.log(err.error.error);
 
           if (error.includes('Duplicate entry')) {
             this.registerErrors = 'Email already exists';
