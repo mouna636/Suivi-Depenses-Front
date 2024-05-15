@@ -33,7 +33,7 @@ export class AddDepenseComponent implements OnInit {
       description: ['', Validators.required],
       categoryId: ['', Validators.required],
       tagId: ['', Validators.required],
-      userId: ['', Validators.required] // Assuming this is fetched from local storage in the service
+      
     });
   }
 
