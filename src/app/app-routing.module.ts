@@ -7,6 +7,7 @@ import { CategoryListComponent } from './Components/category-list/category-list.
 import { TagListComponent } from './Components/tag-list/tag-list.component';
 import { AuthComponent } from './Components/auth/auth.component';
 import { ListDepenseComponent } from './Components/gestion-depenses/list-depense/list-depense.component';
+import { GraphiqueComponent } from './Components/graphique/graphique.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'list-categories', component: CategoryListComponent },
   { path: 'list-tags', component: TagListComponent },
   { path: 'auth', component: AuthComponent },
-  { path: 'list-depense', component: ListDepenseComponent }
+  { path: 'list-depense', component: ListDepenseComponent },
+  { path: 'graphique', component:GraphiqueComponent },
 ];
 
 @NgModule({

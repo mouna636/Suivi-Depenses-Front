@@ -19,6 +19,8 @@ import { FooterComponent } from './Components/footer/footer.component';
 import { HeroComponent } from './Components/hero/hero.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { TopBarComponent } from './Components/top-bar/top-bar.component';
+import { GraphiqueComponent } from './Components/graphique/graphique.component';
+
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { TopBarComponent } from './Components/top-bar/top-bar.component';
     HeroComponent,
     FooterComponent,
     TopBarComponent,
+    GraphiqueComponent
   ],
   imports: [
     BrowserModule,
