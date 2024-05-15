@@ -33,9 +33,7 @@
         <div class="card-body bg-light">
    
         <div class = "container">
-            <form [formGroup]="depenseForm" (ngSubmit)="AddDepense()">
-
-        
+            <form [formGroup]="depenseForm" (ngSubmit)=" addDepense()">
 
         <div class="controls">
 
@@ -81,10 +79,24 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="form_message">Description</label>
-                        <textarea id="form_message"formControlName="description" class="form-control" id="description" rows="4" required="required"></textarea
+                        <textarea id="form_message" formControlName="description" class="form-control" id="description" rows="4" required="required"></textarea
   >
                         </div>
 
+                        
+  <div class="form-group">
+    <label for="category">Category</label>
+    <select id="category" formControlName="categoryId" class="form-control" >
+      <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="tag">Tag</label>
+    <select id="tag" formControlName="tagId" class="form-control">
+      <option *ngFor="let tag of tags" [value]="tag._id">{{ tag.name }}</option>
+    </select>
+  </div>
                     </div>
 
 

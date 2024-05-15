@@ -1,46 +1,63 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DepenseService } from '../depense.service';
+import { TagService } from 'src/app/services/tag.service';
+import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
   selector: 'app-add-depense',
   templateUrl: './add-depense.component.html',
   styleUrls: ['./add-depense.component.scss']
 })
-export class AddDepenseComponent implements OnInit{
+export class AddDepenseComponent implements OnInit {
   depenseForm: any;
+  categories: any[] = [];
+  tags: any[] = [];
 
-  constructor(private fb: FormBuilder, private depenseService: DepenseService) { }
+  constructor(
+    private fb: FormBuilder,
+    private depenseService: DepenseService,
+    private categoryService: CategoryService,
+    private tagService: TagService
+  ) { }
 
   ngOnInit(): void {
     this.initForm();
+    this.loadCategoriesAndTags();
   }
 
   initForm(): void {
     this.depenseForm = this.fb.group({
       montant: ['', Validators.required],
       date: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      categoryId: ['', Validators.required],
+      tagId: ['', Validators.required],
+      userId: ['', Validators.required] // Assuming this is fetched from local storage in the service
     });
   }
 
-  AddDepense(): void {
+  loadCategoriesAndTags(): void {
+    this.categoryService.getAllCategoriesByUserId().subscribe(data => {
+      this.categories = data;
+    });
+
+    this.tagService.getAllTagsByUserId().subscribe(data => {
+      this.tags = data;
+    });
+  }
+
+  addDepense(): void {
     if (this.depenseForm.valid) {
-        const montant = this.depenseForm.get('montant').value;
-        const date = this.depenseForm.get('date').value;
-        const description = this.depenseForm.get('description').value;
+      const depense = this.depenseForm.value;
 
-      
-        const depense = { montant, date, description };
-
-        this.depenseService.addDepense(depense).subscribe(
-            (response) => {
-                console.log('Dépense ajoutée avec succès :', response);
-            },
-            
-        );
+      this.depenseService.addDepense(depense).subscribe(
+        (response) => {
+          console.log('Dépense ajoutée avec succès :', response);
+        },
+        
+      );
     }
-}
-}
+  }
 
-
+}
