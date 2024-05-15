@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DepenseService } from '../depense.service';
 import { Router } from '@angular/router';
 
@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
   templateUrl: './list-depense.component.html',
   styleUrls: ['./list-depense.component.scss']
 })
-export class ListDepenseComponent {
-  depenses:any={};
+export class ListDepenseComponent implements OnInit {
+  depenses: any[] = [];
   constructor(private depenseService:DepenseService,private router:Router){}
   ngOnInit(){
    this.getAllDepenses();

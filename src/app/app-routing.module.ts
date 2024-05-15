@@ -6,6 +6,7 @@ import { AddDepenseComponent } from './Components/gestion-depenses/add-depense/a
 import { CategoryListComponent } from './Components/category-list/category-list.component';
 import { TagListComponent } from './Components/tag-list/tag-list.component';
 import { AuthComponent } from './Components/auth/auth.component';
+import { ListDepenseComponent } from './Components/gestion-depenses/list-depense/list-depense.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'list-categories', component: CategoryListComponent },
   { path: 'list-tags', component: TagListComponent },
   { path: 'auth', component: AuthComponent },
+  { path: 'list-depense', component: ListDepenseComponent }
 ];
 
 @NgModule({

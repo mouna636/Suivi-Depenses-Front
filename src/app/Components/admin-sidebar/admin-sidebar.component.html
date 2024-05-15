@@ -9,25 +9,21 @@
     <div class="sidebar-body">
       <ul class="sidebar-body-menu">
         <li>
-          <a class="show-cat-btn" href="##">
-            <span>
-              <img
+        
+        
+          <li>
+            <a
+              class="show-cat-btn"
+              style="cursor: pointer"
+              [routerLink]="'/list-depenses'"
+            >
+              <span>
+                <img
                 src="assets\img\icons8-historique-de-paiement-48.png"
                 style="width: 30px; margin-right: 10px" /></span
-            >gestion Dépenses
-            <span class="category__btn transparent-btn" title="Open list">
-              <i data-feather="chevron-down" aria-hidden="true"></i>
-            </span>
-          </a>
-          <ul class="cat-sub-menu">
-            <li>
-              <a href="/add-depense">Ajouter dépense</a>
-            </li>
-            <li>
-              <a href="/list-depense">List dépenses</a>
-            </li>
-          </ul>
-        </li>
+            >Liste dépenses
+            </a>
+          </li>
 
         <li>
           <a
