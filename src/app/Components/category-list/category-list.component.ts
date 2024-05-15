@@ -14,8 +14,11 @@ export class CategoryListComponent implements OnInit {
   errors = '';
   sucess = '';
   constructor(private categoryService: CategoryService) {}
-
+  exeededCats: any[] = [];
   ngOnInit(): void {
+    this.exeededCats = this.categoryService.getExceededCategories();
+    console.log(this.categoryService.getExceededCategories());
+
     this.getAllCategories();
     this.catForm = new FormGroup({
       name: new FormControl('', []),
@@ -94,6 +97,11 @@ export class CategoryListComponent implements OnInit {
       this.sucess = '';
     }, 700);
   }
+
+  checkIfIdInArrayOfObjects(cat: any): boolean {
+    return this.exeededCats.some((item) => item.category._id === cat._id);
+  }
+
   updateCategory(cat: Category) {
     if (!this.catForm.valid) {
       this.errors = 'Please fill all fields';

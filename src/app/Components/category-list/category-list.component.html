@@ -1,171 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elegant Dashboard | Dashboard</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Elegant Dashboard | Dashboard</title>
+  <body>
+    <div class="layer"></div>
+    <!-- ! Body -->
+    <a class="skip-link sr-only" href="#skip-target">Skip to content</a>
+    <div class="page-flex">
+      <!-- ! Sidebar -->
+      <app-admin-sidebar></app-admin-sidebar>
+      <div class="main-wrapper">
+        <app-top-bar></app-top-bar>
+        <div class="container">
+          <div class="row mt-5">
+            <div class="col-lg-10 mx-auto mt-5">
+              <div class="card mt-2 mx-auto p-4 bg-light">
+                <div class="card-body bg-light">
+                  <div class="container">
+                    <div class="d-flex justify-content-end mb-4">
+                      <button
+                        class="btn btn-success"
+                        data-bs-toggle="modal"
+                        data-bs-target="#tag1"
+                        (click)="handleViews()"
+                      >
+                        Add Category
+                      </button>
+                    </div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">-</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Description</th>
+                          <th scope="col">Budget</th>
+                          <th scope="col"></th>
+                          <th scope="col" *ngIf="exeededCats.length > 0"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let tag of categoryList; let i = index">
+                          <td>{{ i + 1 }}</td>
+                          <td>{{ tag.name }}</td>
+                          <td>{{ tag.description }}</td>
+                          <td
+                            [ngClass]="{
+                              danger: checkIfIdInArrayOfObjects(tag)
+                            }"
+                          >
+                            {{ tag.budget }} DT
+                          </td>
 
- 
-</head>
+                          <td class="d-flex">
+                            <i
+                              class="bi bi-trash-fill actionBtn text-danger"
+                              (click)="deleteCategory(tag._id)"
+                            ></i>
 
-<body>
-  <div class="layer"></div>
-<!-- ! Body -->
-<a class="skip-link sr-only" href="#skip-target">Skip to content</a>
-<div class="page-flex">
-  <!-- ! Sidebar -->
-  <app-admin-sidebar></app-admin-sidebar>
-  <div class="main-wrapper">
-    <app-top-bar></app-top-bar>
-    <div class="container">
-      <div class="row mt-5">
-        <div class="col-lg-10 mx-auto mt-5">
-          <div class="card mt-2 mx-auto p-4 bg-light">
-            <div class="card-body bg-light">
-              <div class="container">
-                <div class="d-flex justify-content-end mb-4">
-                  <button
-                    class="btn btn-success"
-                    data-bs-toggle="modal"
-                    data-bs-target="#tag1"
-                    (click)="handleViews()"
-                  >
-                    Add Category
-                  </button>
+                            <i
+                              data-bs-toggle="modal"
+                              data-bs-target="#tag1"
+                              class="bi bi-pencil-fill actionBtn"
+                              (click)="handleViews(tag)"
+                            ></i>
+                          </td>
+                          <!-- <td
+                            *ngIf="
+                              checkIfIdInArrayOfObjects(tag)
+                            "
+                          >
+                            {{
+                              exeededCats[i].category.name +
+                                " exceeded budget: " +
+                                exeededCats[i].total
+                            }}
+                          </td> -->
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">-</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Budget</th>
-                      <th scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let tag of categoryList; let i = index">
-                      <td>{{ i + 1 }}</td>
-                      <td>{{ tag.name }}</td>
-                      <td>{{ tag.description }}</td>
-                      <td>{{ tag.budget }} DT</td>
-
-                      <td class="d-flex">
-                        <i
-                          class="bi bi-trash-fill actionBtn text-danger"
-                          (click)="deleteCategory(tag._id)"
-                        ></i>
-
-                        <i
-                          data-bs-toggle="modal"
-                          data-bs-target="#tag1"
-                          class="bi bi-pencil-fill actionBtn"
-                          (click)="handleViews(tag)"
-                        ></i>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-<div
-  class="modal fade"
-  id="tag1"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form [formGroup]="catForm" (ngSubmit)="handleSubmit()">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            (click)="cleanForm()"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="name"
-              id="name"
-              placeholder="Category Name"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="description"
-              id="description"
-              placeholder="Category Description"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="budget" class="form-label">Budget</label>
-            <input
-              type="number"
-              class="form-control"
-              formControlName="budget"
-              id="budget"
-              placeholder="Budget Description"
-            />
-          </div>
-          <input type="text" hidden formControlName="id" value="" />
-        </div>
+    <div
+      class="modal fade"
+      id="tag1"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form [formGroup]="catForm" (ngSubmit)="handleSubmit()">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                (click)="cleanForm()"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                  id="name"
+                  placeholder="Category Name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="description"
+                  id="description"
+                  placeholder="Category Description"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="budget" class="form-label">Budget</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="budget"
+                  id="budget"
+                  placeholder="Budget Description"
+                />
+              </div>
+              <input type="text" hidden formControlName="id" value="" />
+            </div>
 
-        <div
-          *ngIf="errors"
-          class="d-flex justify-content-center align-items-center mb-3"
-        >
-          <p class="text-danger">
-            <strong>{{ errors }}</strong>
-          </p>
-        </div>
-        <div
-          *ngIf="sucess"
-          class="d-flex justify-content-center align-items-center mt mb-3"
-        >
-          <p class="text-success">
-            <strong>{{ sucess }}</strong>
-          </p>
-        </div>
+            <div
+              *ngIf="errors"
+              class="d-flex justify-content-center align-items-center mb-3"
+            >
+              <p class="text-danger">
+                <strong>{{ errors }}</strong>
+              </p>
+            </div>
+            <div
+              *ngIf="sucess"
+              class="d-flex justify-content-center align-items-center mt mb-3"
+            >
+              <p class="text-success">
+                <strong>{{ sucess }}</strong>
+              </p>
+            </div>
 
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-            (click)="cleanForm()"
-          >
-            Close
-          </button>
-          <button
-            type="submit"
-            class="btn btn-primary"
-            [attr.data-bs-dismiss]="errors ? null : 'modal'"
-          >
-            {{ !editing ? "Add Category" : "Update Category" }}
-          </button>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+                (click)="cleanForm()"
+              >
+                Close
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [attr.data-bs-dismiss]="errors ? null : 'modal'"
+              >
+                {{ !editing ? "Add Category" : "Update Category" }}
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
-  </div>
-</div>
+  </body>
+</html>
