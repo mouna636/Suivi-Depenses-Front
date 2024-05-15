@@ -20,14 +20,6 @@ export class ListDepenseComponent implements OnInit {
  this.depenses=data;
     })
    }
-  /*  deleteDepense(id:number){
-    this.depenseService.deleteOffre(id).subscribe((res)=>
-      {
-        console.log(res);
-      }
-    )
-   }
-   gotToEditOffre(x: any) {
-    this.router.navigate([`update-offre/${x}`]);
-  } */
-}
+  }
+  
+
