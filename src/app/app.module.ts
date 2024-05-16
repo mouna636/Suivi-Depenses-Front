@@ -20,6 +20,7 @@ import { HeroComponent } from './Components/hero/hero.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { TopBarComponent } from './Components/top-bar/top-bar.component';
 import { GraphiqueComponent } from './Components/graphique/graphique.component';
+import { GraheDepenceDateComponent } from './Components/grahe-depence-date/grahe-depence-date.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { GraphiqueComponent } from './Components/graphique/graphique.component';
     HeroComponent,
     FooterComponent,
     TopBarComponent,
-    GraphiqueComponent
+    GraphiqueComponent,
+    GraheDepenceDateComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +47,7 @@ import { GraphiqueComponent } from './Components/graphique/graphique.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-   
+    
   ],
   providers: [],
   bootstrap: [AppComponent],

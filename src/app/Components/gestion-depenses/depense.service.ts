@@ -22,7 +22,9 @@ export class DepenseService {
       `${this.URI}/user/${this.local.getObject('user').id}`
     );
   }
-
+  deleteDepense(id: string) {
+    return this.http.delete<Depense>(`${this.URI}/${id}`);
+  }
   //filtrer les dépenses par date
   filterDepensesByDateRange(startDate: string, endDate: string): Observable <any> {
     return this.http.get(`${this.URI}/user/${this.local.getObject('user').id}/date/${startDate}/${endDate}`);

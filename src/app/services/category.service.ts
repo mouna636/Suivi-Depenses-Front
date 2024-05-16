@@ -38,7 +38,9 @@ export class CategoryService {
   //     return depensesByCategory;
   //   });
   // }
-
+  getCountCategories() {
+    return this.http.get<number>(`${this.URI}/count`);
+  }
   getExceededCategories() {
     let exeededCats: any[] = [];
     this.getAllCategoriesByUserId().subscribe((categories) => {
