@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { DepenseService } from '../gestion-depenses/depense.service';
+import { DateTime } from 'luxon';
 
 Chart.register(...registerables);
 
 @Component({
-  selector: 'app-graphique',
-  templateUrl: './graphique.component.html',
-  styleUrls: ['./graphique.component.scss'],
+  selector: 'app-grahe-depence-date',
+  templateUrl: './grahe-depence-date.component.html',
+  styleUrls: ['./grahe-depence-date.component.scss'],
 })
-export class GraphiqueComponent implements OnInit {
+export class GraheDepenceDateComponent implements OnInit {
   constructor(private depenseService: DepenseService) {}
 
   ngOnInit(): void {
@@ -21,17 +22,14 @@ export class GraphiqueComponent implements OnInit {
       const categoriesMap = new Map<string, number>();
 
       data.forEach((depense: any) => {
-        const categorie = depense.categoryId.name;
+        const date = depense.date;
         const montant = parseFloat(depense.montant);
 
         if (!isNaN(montant)) {
-          if (categoriesMap.has(categorie)) {
-            categoriesMap.set(
-              categorie,
-              categoriesMap.get(categorie)! + montant
-            );
+          if (categoriesMap.has(date)) {
+            categoriesMap.set(date, categoriesMap.get(date)! + montant);
           } else {
-            categoriesMap.set(categorie, montant);
+            categoriesMap.set(date, montant);
           }
         }
       });
@@ -39,22 +37,23 @@ export class GraphiqueComponent implements OnInit {
       const labels = Array.from(categoriesMap.keys());
       const dataValues = Array.from(categoriesMap.values());
 
-      new Chart('piechart', {
-        type: 'bar',
+      new Chart('chart', {
+        type: 'pie',
         data: {
           labels: labels,
           datasets: [
             {
-              label: 'Montant par Catégorie',
+              label: 'Montant par Date',
               data: dataValues,
               borderWidth: 1,
               backgroundColor: [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)',
-                'rgba(255, 270, 86, 0.5)',
+                'rgba(150, 50, 132, 0.5)',
+                'rgba(54, 162, 310, 0.5)',
                 'rgba(255, 140, 86, 0.5)',
-                'rgba(75, 50, 10, 0.5)',
+                'rgba(75, 50, 192, 0.5)',
+                'rgba(140, 102, 150, 0.5)',
+                'rgba(250, 159, 64, 0.5)',
+                'rgba(0, 255, 0, 0.5)',
               ],
             },
           ],

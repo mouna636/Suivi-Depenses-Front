@@ -89,47 +89,7 @@
           </div>
         </div>
 
-        <!-- Dépenses filtrées -->
-
-        <!-- <div
-          *ngIf="depenses.length > 0"
-          class="container"
-          style="margin-top: 20px"
-        >
-          <h4>Dépenses:</h4>
-          <table class="table mt-2">
-            <thead>
-              <tr>
-                <th>Catégorie</th>
-                <th>Montant</th>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Tag</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let d of depenses">
-                <td>{{ d.categoryId.name }}</td>
-                <td>{{ d.montant }}</td>
-                <td>{{ d.date }}</td>
-                <td>{{ d.description }}</td>
-                <td>{{ d.tagId.name }}</td>
-                <td>
-                  <i
-                    class="bi bi-trash-fill actionBtn text-danger"
-                    style="margin-left: 20px; margin-right: 20px"
-                  ></i>
-                  <i
-                    data-bs-toggle="modal"
-                    data-bs-target="#tag1"
-                    class="bi bi-pencil-fill actionBtn"
-                  ></i>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div> -->
+      
 
         <div class="col-md-10">
           <div class="container" style="margin-top: 20px; margin-left: 120px">
@@ -145,7 +105,7 @@
                 title="Importer via un fichier CSV"
                 data-bs-target="#exampleModal2"
                 src="assets\img\icons8-importer-csv-100.png"
-                style="margin-bottom: 10px; cursor: pointer"
+                style="margin-bottom: 10px; margin-left: 140px; cursor: pointer"
               />
               <input
                 type="submit"
@@ -158,6 +118,7 @@
             <table class="table">
               <thead>
                 <tr>
+                  <th>-</th>
                   <th>Catégorie</th>
                   <th>Montant</th>
                   <th>Date</th>
@@ -167,7 +128,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let d of depenses">
+                <tr *ngFor="let d of depenses,let i = index">
+                  <td>{{i+1}}</td>
                   <td>{{ d.categoryId.name }}</td>
                   <td>{{ d.montant }}</td>
                   <td>{{ d.date }}</td>
@@ -177,7 +139,7 @@
                     {{ d.tagId.name }}
                   </td>
                   <td>
-                    <i
+                    <i (click)="deleteDepense(d._id)"
                       class="bi bi-trash-fill actionBtn text-danger"
                       style="margin-left: 20px; margin-right: 20px"
                     ></i>

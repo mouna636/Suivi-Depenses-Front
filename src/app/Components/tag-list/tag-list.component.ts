@@ -14,7 +14,6 @@ export class TagListComponent {
   tagForm!: FormGroup;
   colorArray = colorArray;
   errors = '';
-  sucess = '';
   constructor(private tagService: TagService) {}
 
   ngOnInit(): void {
@@ -52,7 +51,6 @@ export class TagListComponent {
       next: (data) => {
         console.log(data);
         this.TagList.push(data);
-        this.sucess = `${tag.name} added successfully`;
         this.errors = '';
       },
       error: (error) => {
@@ -98,8 +96,7 @@ export class TagListComponent {
       });
       this.selectedColor = '';
       this.errors = '';
-      this.sucess = '';
-    }, 700);
+    }, 100);
   }
   updateTag(tag: Tag) {
     if (!this.tagForm.valid || this.selectedColor === '') {
@@ -112,11 +109,12 @@ export class TagListComponent {
       description: this.tagForm.value.description,
       color: this.selectedColor,
     };
+    console.log(newTag, id);
+
     this.tagService.updateTag(id, newTag).subscribe({
       next: (data) => {
         console.log(data);
 
-        this.sucess = `${newTag.name} updated successfully`;
         setTimeout(() => {
           this.getAllTags();
         }, 500);
@@ -124,6 +122,8 @@ export class TagListComponent {
         this.cleanForm();
       },
       error: (error) => {
+        console.log(error);
+
         this.errors = error.error.message;
         this.cleanForm();
       },

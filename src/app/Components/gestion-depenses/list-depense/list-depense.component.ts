@@ -15,9 +15,7 @@ export class ListDepenseComponent implements OnInit {
 depenses:any[]=[]
   startDate: string = '';
   endDate: string = '';
-
   selectedCategory: string = '';
-
   categories: any[] = [];
   categoriesFilter: any[] = [];
 
@@ -130,4 +128,18 @@ depenses:any[]=[]
       });
     }
   }
+  deleteDepense(id:string){
+    this.depenseService.deleteDepense(id).subscribe(
+    
+        (data) => {
+          console.log(data);
+          this.depenses= this.depenses.filter((dep) => dep._id !== id);
+      }
+      
+    
+      
+    )
+  }
 }
+
+

@@ -1,15 +1,24 @@
 import { Injectable } from '@angular/core';
 
+import { BASE_URL } from './config';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   addItem(key: string, value: any) {
     localStorage.setItem(key, value);
   }
   getItem(key: string) {
+    if (key === 'user') {
+      this.getCurrentUser()?.subscribe((usr) => {
+        return usr;
+      });
+    }
     return localStorage.getItem(key);
   }
 
@@ -30,8 +39,7 @@ export class LocalStorageService {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
-  getObject(key: string) {
-    const item = localStorage.getItem(key);
-    if (item) return JSON.parse(item);
+  getCurrentUser(): Observable<any> {
+    return this.http.get<any>(BASE_URL + '/api/auth/user');
   }
 }

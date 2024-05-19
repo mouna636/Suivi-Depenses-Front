@@ -31,7 +31,7 @@ export class AuthComponent {
 
   ngOnInit() {
     this.myLoginForm = new FormGroup({
-      username: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.min(0), Validators.max(120)]),
     });
     this.myRegisterForm = new FormGroup({
@@ -44,9 +44,9 @@ export class AuthComponent {
 
   onSubmit() {
     if (this.myLoginForm.valid) {
-      console.log('Form submitted:', this.myLoginForm.value.username);
+      console.log('Form submitted:', this.myLoginForm.value);
       const user = {
-        username: this.myLoginForm.value.username,
+        email: this.myLoginForm.value.email,
         password: this.myLoginForm.value.password,
       };
       this.authService.login(user).subscribe({
@@ -66,10 +66,8 @@ export class AuthComponent {
   }
 
   onRegister() {
-    console.log('test');
-
     if (this.myRegisterForm.valid) {
-      console.log('Form submitted:', this.myRegisterForm.value.email);
+      console.log('Form submitted:', this.myRegisterForm.value);
       const user = {
         username: this.myRegisterForm.value.username,
         email: this.myRegisterForm.value.email,
@@ -77,19 +75,24 @@ export class AuthComponent {
       };
       this.authService.register(user).subscribe({
         next: (data: any) => {
+          console.log(data);
+
           if (this.registerErrors) {
             this.registerErrors = '';
           }
           this.toggleSide();
         },
         error: (err) => {
-          console.log(user);
+          console.log(err);
 
           let error: string = err.error.message;
-          console.log(err.error.error);
-
-          if (error.includes('Duplicate entry')) {
+          console.log(err?.error.error);
+          const expressHandle = 'Duplicate entry';
+          const nestHandle = 'dup key';
+          if (error?.includes(expressHandle || nestHandle)) {
             this.registerErrors = 'Email already exists';
+          } else {
+            this.registerErrors = error;
           }
         },
       });

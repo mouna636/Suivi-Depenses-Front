@@ -22,7 +22,7 @@ export class AuthService {
       .post<HttpResponse<any>>(
         BASE_URL + '/api/auth/signin',
         {
-          username: user.username,
+          email: user.email,
           password: user.password,
         },
         {
@@ -31,11 +31,9 @@ export class AuthService {
       )
       .pipe(
         map((response: HttpResponse<any>) => {
-          const { token, _id, username } = response.body;
-          const user = { id: _id, username };
+          const { token } = response.body;
           if (token) {
             this.localStorageService.addItem('token', token);
-            this.localStorageService.addObject('user', user);
             window.location.href = '/dashboard';
             // this.router.navigate(['/dashboard']);
           } else {
@@ -62,7 +60,14 @@ export class AuthService {
   }
 
   logout() {
-    this.localStorageService.removeManyItems(['token', 'user']);
+    this.localStorageService.removeItem('token');
     window.location.href = '/';
   }
+
+  // getCurrentUser() {
+  //   const token = this.localStorageService.getItem('token');
+  //   if (!token) return null;
+
+  //   return this.http.get(BASE_URL + '/api/auth/user');
+  // }
 }

@@ -1,85 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elegant Dashboard | Dashboard</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Elegant Dashboard | Dashboard</title>
+  <body>
+    <div class="layer"></div>
+    <!-- ! Body -->
+    <a class="skip-link sr-only" href="#skip-target">Skip to content</a>
 
- 
-</head>
+    <div class="page-flex">
+      <app-admin-sidebar></app-admin-sidebar>
+      <div class="main-wrapper">
+        <app-top-bar></app-top-bar>
+        <div class="container">
+          <div class="row mt-5">
+            <div class="col-lg-10 mx-auto mt-5">
+              <div class="card mt-2 mx-auto p-4 bg-light">
+                <div class="card-body bg-light">
+                  <div class="container">
+                    <div class="d-flex justify-content-end mb-4">
+                      <button
+                        class="btn btn-success"
+                        data-bs-toggle="modal"
+                        data-bs-target="#tag1"
+                        (click)="handleViews()"
+                      >
+                        Ajouter Tag
+                      </button>
+                    </div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">-</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Description</th>
+                          <th scope="col">Color</th>
+                          <th scope="col"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let tag of TagList; let i = index">
+                          <td>{{ i + 1 }}</td>
+                          <td>{{ tag.name }}</td>
+                          <td>{{ tag.description }}</td>
+                          <td>
+                            <button
+                              disabled
+                              class="smallerRoundedButton"
+                              [style]="'background:' + tag.color"
+                            ></button>
+                          </td>
+                          <td class="d-flex">
+                            <i
+                              class="bi bi-trash-fill actionBtn"
+                              (click)="deleteTag(tag._id)"
+                            ></i>
 
-<body>
-  <div class="layer"></div>
-<!-- ! Body -->
-<a class="skip-link sr-only" href="#skip-target">Skip to content</a>
-
-<div class="page-flex">
-  <app-admin-sidebar></app-admin-sidebar>
-  <div class="main-wrapper">
-    <app-top-bar></app-top-bar>
-    <div class="container">
-      <div class="row mt-5">
-        <div class="col-lg-10 mx-auto mt-5">
-          <div class="card mt-2 mx-auto p-4 bg-light">
-            <div class="card-body bg-light">
-              <div class="container">
-                <div class="d-flex justify-content-end mb-4">
-                  <button
-                    class="btn btn-success"
-                    data-bs-toggle="modal"
-                    data-bs-target="#tag1"
-                    (click)="handleViews()"
-                  >
-                    Ajouter Tag
-                  </button>
-                </div>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">-</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Color</th>
-                      <th scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let tag of TagList; let i = index">
-                      <td>{{ i + 1 }}</td>
-                      <td>{{ tag.name }}</td>
-                      <td>{{ tag.description }}</td>
-                      <td>
-                        <button
-                          disabled
-                          class="smallerRoundedButton"
-                          [style]="'background:' + tag.color"
-                        ></button>
-                      </td>
-                      <td class="d-flex">
-                        <i
-                          class="bi bi-trash-fill actionBtn"
-                          (click)="deleteTag(tag._id)"
-                        ></i>
-
-                        <i
-                          data-bs-toggle="modal"
-                          data-bs-target="#tag1"
-                          class="bi bi-pencil-fill actionBtn"
-                          (click)="handleViews(tag)"
-                        ></i>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div
-                  class="d-flex flex-row gap-2 justify-content-center align-items-center"
-                >
-                  <div *ngFor="let c of TagList">
-                    <a href="#" class="tag" [style]="'background:' + c.color">{{
-                      c.name
-                    }}</a>
+                            <i
+                              data-bs-toggle="modal"
+                              data-bs-target="#tag1"
+                              class="bi bi-pencil-fill actionBtn"
+                              (click)="handleViews(tag)"
+                            ></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div
+                      class="d-flex flex-row gap-2 justify-content-center align-items-center"
+                    >
+                      <div *ngFor="let c of TagList">
+                        <a
+                          href="#"
+                          class="tag"
+                          [style]="'background:' + c.color"
+                          >{{ c.name }}</a
+                        >
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -87,100 +89,94 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div
-    class="modal fade"
-    id="tag1"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form [formGroup]="tagForm" (ngSubmit)="handleSubmit()">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Tag</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-              (click)="cleanForm()"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="name"
-                id="name"
-                placeholder="Tag Name"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="description" class="form-label">Description</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="description"
-                id="description"
-                placeholder="Tag Description"
-              />
-            </div>
-            <input type="text" hidden formControlName="id" value="" />
-            <div class="mb-3">
-              <div class="row justify-content-center">
-                <div class="col-auto" *ngFor="let color of colorArray">
-                  <button
-                    (click)="changeColor(color, $event)"
-                    [ngClass]="{ active: color === selectedColor }"
-                    class="roundedBtn"
-                    [style]="'background:' + color"
-                  ></button>
+      <div
+        class="modal fade"
+        id="tag1"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form [formGroup]="tagForm" (ngSubmit)="handleSubmit()">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Tag</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  (click)="cleanForm()"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="name"
+                    id="name"
+                    placeholder="Tag Name"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="description" class="form-label"
+                    >Description</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="description"
+                    id="description"
+                    placeholder="Tag Description"
+                  />
+                </div>
+                <input type="text" hidden formControlName="id" value="" />
+                <div class="mb-3">
+                  <div class="row justify-content-center">
+                    <div class="col-auto" *ngFor="let color of colorArray">
+                      <button
+                        (click)="changeColor(color, $event)"
+                        [ngClass]="{ active: color === selectedColor }"
+                        class="roundedBtn"
+                        [style]="'background:' + color"
+                      ></button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div
-            *ngIf="errors"
-            class="d-flex justify-content-center align-items-center mb-3"
-          >
-            <p class="text-danger">
-              <strong>{{ errors }}</strong>
-            </p>
-          </div>
-          <div
-            *ngIf="sucess"
-            class="d-flex justify-content-center align-items-center mt mb-3"
-          >
-            <p class="text-success">
-              <strong>{{ sucess }}</strong>
-            </p>
-          </div>
+              <div
+                *ngIf="errors"
+                class="d-flex justify-content-center align-items-center mb-3"
+              >
+                <p class="text-danger">
+                  <strong>{{ errors }}</strong>
+                </p>
+              </div>
 
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              (click)="cleanForm()"
-            >
-              Close
-            </button>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              [attr.data-bs-dismiss]="errors ? null : 'modal'"
-            >
-              {{ !editing ? "Add Tag" : "Update Tag" }}
-            </button>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                  (click)="cleanForm()"
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  [attr.data-bs-dismiss]="errors ? null : 'modal'"
+                >
+                  {{ !editing ? "Add Tag" : "Update Tag" }}
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  </body>
+</html>

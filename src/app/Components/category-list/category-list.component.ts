@@ -12,7 +12,6 @@ export class CategoryListComponent implements OnInit {
   categoryList: Category[] = [];
   catForm!: FormGroup;
   errors = '';
-  sucess = '';
   constructor(private categoryService: CategoryService) {}
   exeededCats: any[] = [];
   ngOnInit(): void {
@@ -38,6 +37,10 @@ export class CategoryListComponent implements OnInit {
   }
 
   addCategory() {
+    if (!this.catForm.valid) {
+      this.errors = 'Please fill all fields';
+      return;
+    }
     const category: any = {
       name: this.catForm.value.name,
       description: this.catForm.value.description,
@@ -47,7 +50,6 @@ export class CategoryListComponent implements OnInit {
       next: (data) => {
         console.log(data);
         this.categoryList.push(data);
-        this.sucess = `${category.name} added successfully`;
         this.errors = '';
       },
       error: (error) => {
@@ -94,13 +96,10 @@ export class CategoryListComponent implements OnInit {
         id: '',
       });
       this.errors = '';
-      this.sucess = '';
     }, 700);
   }
 
   checkIfIdInArrayOfObjects(cat: any): boolean {
-    console.log(cat);
-
     return this.exeededCats.some((item) => item.category._id === cat._id);
   }
 
@@ -119,7 +118,6 @@ export class CategoryListComponent implements OnInit {
       next: (data) => {
         console.log(data);
 
-        this.sucess = `${newCategory.name} updated successfully`;
         setTimeout(() => {
           this.getAllCategories();
         }, 500);
@@ -127,6 +125,7 @@ export class CategoryListComponent implements OnInit {
         this.cleanForm();
       },
       error: (error) => {
+        console.log(error);
         this.errors = error.error.message;
         this.cleanForm();
       },

@@ -4,6 +4,7 @@ import { BASE_URL } from './config';
 import { Category } from '../models/Category';
 import { LocalStorageService } from './local-storage.service';
 import { DepenseService } from '../Components/gestion-depenses/depense.service';
+import { Observable, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,15 +18,19 @@ export class CategoryService {
     private depS: DepenseService
   ) {}
   addCategory(category: Category) {
-    category.userId = this.local.getObject('user').id;
-    console.log(category);
-
-    return this.http.post<Category>(this.URI, { category });
+    return this.local.getCurrentUser().pipe(
+      switchMap((user) => {
+        category.userId = user.id;
+        return this.http.post<Category>(this.URI, category);
+      })
+    );
   }
 
-  getAllCategoriesByUserId() {
-    return this.http.get<Category[]>(
-      `${this.URI}/user/${this.local.getObject('user').id}`
+  getAllCategoriesByUserId(): Observable<any[]> {
+    return this.local.getCurrentUser().pipe(
+      switchMap((user) => {
+        return this.http.get<Category[]>(`${this.URI}/user/${user.id}`);
+      })
     );
   }
 
@@ -38,29 +43,33 @@ export class CategoryService {
   //     return depensesByCategory;
   //   });
   // }
-
+  getCountCategories() {
+    return this.http.get<number>(`${this.URI}/count`);
+  }
   getExceededCategories() {
     let exeededCats: any[] = [];
-    this.getAllCategoriesByUserId().subscribe((categories) => {
-      categories.forEach((category) => {
-        let depensesByCategory: any[] = [];
-        this.depS.getAllDepensessByUserId().subscribe((depenses) => {
-          console.log('depenses', depenses);
+    false &&
+      this.getAllCategoriesByUserId().subscribe((categories) => {
+        categories.forEach((category: any) => {
+          let depensesByCategory: any[] = [];
+          this.depS.getAllDepensessByUserId().subscribe((depenses) => {
+            if (depenses.length == 0 || !depenses) return;
+            console.log('depenses', depenses);
 
-          depensesByCategory = depenses.filter(
-            (depense: any) => depense.categoryId._id === category._id
-          );
-          let total = 0;
-          depensesByCategory.forEach((depense) => {
-            total += Number(depense.montant);
+            depensesByCategory = depenses.filter(
+              (depense: any) => depense.categoryId._id === category._id
+            );
+            let total = 0;
+            depensesByCategory.forEach((depense) => {
+              total += Number(depense.montant);
+            });
+
+            if (total > +category.budget) {
+              exeededCats.push({ category, total: +category.budget });
+            }
           });
-
-          if (total > +category.budget) {
-            exeededCats.push({ category, total: +category.budget });
-          }
         });
       });
-    });
     return exeededCats;
   }
 
@@ -69,7 +78,7 @@ export class CategoryService {
   }
 
   updateCategory(id: string, category: Category) {
-    return this.http.put<Category>(`${this.URI}/${id}`, { category });
+    return this.http.put<Category>(`${this.URI}/${id}`, category);
   }
 
   deleteCategory(id: string) {
