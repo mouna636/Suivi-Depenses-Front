@@ -56,7 +56,7 @@ export class AuthComponent {
         },
         error: (error) => {
           console.log(error);
-
+          this.loginErrors = error.error.message;
           // if (error.error.status == 403) {
           //   this.loginErrors = 'Invalid credentials';
           // }

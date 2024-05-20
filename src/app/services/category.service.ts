@@ -48,28 +48,26 @@ export class CategoryService {
   }
   getExceededCategories() {
     let exeededCats: any[] = [];
-    false &&
-      this.getAllCategoriesByUserId().subscribe((categories) => {
-        categories.forEach((category: any) => {
-          let depensesByCategory: any[] = [];
-          this.depS.getAllDepensessByUserId().subscribe((depenses) => {
-            if (depenses.length == 0 || !depenses) return;
-            console.log('depenses', depenses);
 
-            depensesByCategory = depenses.filter(
-              (depense: any) => depense.categoryId._id === category._id
-            );
-            let total = 0;
-            depensesByCategory.forEach((depense) => {
-              total += Number(depense.montant);
-            });
-
-            if (total > +category.budget) {
-              exeededCats.push({ category, total: +category.budget });
-            }
+    this.getAllCategoriesByUserId().subscribe((categories) => {
+      categories.forEach((category: any) => {
+        let depensesByCategory: any[] = [];
+        this.depS.getAllDepensessByUserId().subscribe((depenses) => {
+          if (depenses.length == 0 || !depenses) return;
+          depensesByCategory = depenses.filter(
+            (depense: any) => depense.categoryId._id === category._id
+          );
+          let total = 0;
+          depensesByCategory.forEach((depense) => {
+            total += Number(depense.montant);
           });
+
+          if (total > +category.budget) {
+            exeededCats.push({ category, total: +category.budget });
+          }
         });
       });
+    });
     return exeededCats;
   }
 

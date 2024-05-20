@@ -37,6 +37,7 @@ export class TagListComponent {
   changeColor(color: string, event: Event) {
     event.preventDefault();
     this.selectedColor = color;
+    console.log(color, this.selectedColor);
   }
   addTag() {
     if (!this.tagForm.valid || this.selectedColor === '') {
@@ -46,6 +47,7 @@ export class TagListComponent {
     const tag: any = {
       name: this.tagForm.value.name,
       description: this.tagForm.value.description,
+      color: this.selectedColor,
     };
     this.tagService.addTag(tag).subscribe({
       next: (data) => {

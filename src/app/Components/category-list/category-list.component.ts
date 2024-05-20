@@ -16,7 +16,7 @@ export class CategoryListComponent implements OnInit {
   exeededCats: any[] = [];
   ngOnInit(): void {
     this.exeededCats = this.categoryService.getExceededCategories();
-    console.log(this.categoryService.getExceededCategories());
+    console.log('EXCEEDINGS:  ', this.categoryService.getExceededCategories());
 
     this.getAllCategories();
     this.catForm = new FormGroup({

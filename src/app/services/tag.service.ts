@@ -16,7 +16,6 @@ export class TagService {
     return this.local.getCurrentUser().pipe(
       switchMap((user) => {
         tag.userId = user.id;
-        tag.color = colorArray[Math.floor(Math.random() * colorArray.length)];
         console.log(tag);
         return this.http.post<Tag>(this.URI, tag);
       })

@@ -139,9 +139,9 @@
                     <div class="col-auto" *ngFor="let color of colorArray">
                       <button
                         (click)="changeColor(color, $event)"
-                        [ngClass]="{ active: color === selectedColor }"
                         class="roundedBtn"
                         [style]="'background:' + color"
+                        [class.active]="selectedColor === color"
                       ></button>
                     </div>
                   </div>

@@ -11,12 +11,15 @@ export class DepenseService {
   URI = `${BASE_URL}/api/depenses`;
 
   constructor(private http: HttpClient, private local: LocalStorageService) {}
+
   addDepense(depense: Depense) {
     console.log(depense);
-    this.local.getCurrentUser().subscribe((usr) => {
-      depense.userId = usr.id;
-    });
-    return this.http.post<Depense>(this.URI, { depense });
+    return this.local.getCurrentUser().pipe(
+      switchMap((usr) => {
+        depense.userId = usr.id;
+        return this.http.post<Depense>(this.URI, depense);
+      })
+    );
   }
   getAllDepensessByUserId(): Observable<any> {
     return this.local.getCurrentUser().pipe(

@@ -6,17 +6,14 @@
   color: #000;
   border: 1px solid #b5b5b5;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.1s;
   height: 40px;
   width: 40px;
-  &:hover {
-    background-color: #000000b4;
-    color: #fff;
-  }
-  &.active {
-    background-color: #0000004e;
-    color: #fff;
-  }
+}
+
+.active {
+  border: 2px solid rgba(0, 0, 0, 0.466) !important;
+  color: #fff;
 }
 
 .smallerRoundedButton {
@@ -41,8 +38,7 @@
 }
 
 .active {
-  background-color: yellow;
-  color: #fff;
+  border: 3px solid black;
 }
 
 .actionBtn {
