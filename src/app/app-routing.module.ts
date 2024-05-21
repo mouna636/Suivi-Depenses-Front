@@ -9,6 +9,10 @@ import { AuthComponent } from './Components/auth/auth.component';
 import { ListDepenseComponent } from './Components/gestion-depenses/list-depense/list-depense.component';
 import { GraphiqueComponent } from './Components/graphique/graphique.component';
 import { GraheDepenceDateComponent } from './Components/grahe-depence-date/grahe-depence-date.component';
+import { EditDepenseComponent } from './Components/gestion-depenses/edit-depense/edit-depense.component';
+
+
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,7 +23,8 @@ const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'list-depense', component: ListDepenseComponent },
   { path: 'graphique', component:GraphiqueComponent },
-  { path: 'graphe-date', component:GraheDepenceDateComponent }
+  { path: 'graphe-date', component:GraheDepenceDateComponent },
+  { path: 'edit-depense/:depenseId', component: EditDepenseComponent }
 ];
 
 @NgModule({

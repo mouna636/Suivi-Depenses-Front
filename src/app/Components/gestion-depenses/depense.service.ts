@@ -34,5 +34,11 @@ export class DepenseService {
   sortDepensesByAmount(sortBy:any): Observable <any> {
     return this.http.get(`${this.URI}/user/${this.local.getObject('user').id}/montant/${sortBy}`);
   }
+  updateDepense(id: string, depense: Depense) {
+    return this.http.put<Depense>(`${this.URI}/${id}`, { depense });
+  }
+  getDepenseById(depenseId: string): Observable<any> {
+    return this.http.get(`${this.URI}/${depenseId}`);
+  }
 
 }

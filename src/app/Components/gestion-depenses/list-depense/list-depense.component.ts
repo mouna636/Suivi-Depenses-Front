@@ -136,10 +136,13 @@ depenses:any[]=[]
           this.depenses= this.depenses.filter((dep) => dep._id !== id);
       }
       
-    
-      
     )
   }
+  
+  goToEdit(x:any){
+    this.router.navigate([`edit-depense/${x}`])
+  }
+  
 }
 
 

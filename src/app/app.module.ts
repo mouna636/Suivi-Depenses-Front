@@ -21,6 +21,8 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
 import { TopBarComponent } from './Components/top-bar/top-bar.component';
 import { GraphiqueComponent } from './Components/graphique/graphique.component';
 import { GraheDepenceDateComponent } from './Components/grahe-depence-date/grahe-depence-date.component';
+import { EditDepenseComponent } from './Components/gestion-depenses/edit-depense/edit-depense.component';
+
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { GraheDepenceDateComponent } from './Components/grahe-depence-date/grahe
     FooterComponent,
     TopBarComponent,
     GraphiqueComponent,
-    GraheDepenceDateComponent
+    GraheDepenceDateComponent,
+    EditDepenseComponent,
+    
   ],
   imports: [
     BrowserModule,
